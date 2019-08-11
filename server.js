@@ -365,7 +365,7 @@ new WebSocket.Server({
                             index++
                         }
                         else clearInterval(startBotsInterval)
-                    }, 300)
+                    }, 20)
                     console.log('[SERVER] Starting bots...')
                 }
                 break
