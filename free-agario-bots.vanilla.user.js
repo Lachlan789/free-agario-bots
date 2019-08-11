@@ -14,13 +14,13 @@ window.SERVER_HOST = 'localhost' // Hostname/IP of the server where the bots are
 
 window.SERVER_PORT = 1337 // Port number used on the server where the bots are running [Default = 1337]
 
-window.BOTS_SPLIT_KEY = 't' // Keyboard key to make the bots split, value must be between a-z (lowercase) or 0-9 [Default = t]
+window.BOTS_SPLIT_KEY = 'x' // Keyboard key to make the bots split, value must be between a-z (lowercase) or 0-9 [Default = t]
 
-window.BOTS_FEED_KEY = 'a' // Keyboard key to make the bots feed, value must be between a-z (lowercase) or 0-9 [Default = a]
+window.BOTS_FEED_KEY = 'c' // Keyboard key to make the bots feed, value must be between a-z (lowercase) or 0-9 [Default = a]
 
-window.BOTS_AI_KEY = 'f' // Keyboard key to enable/disable bots AI (Artificial Intelligence), value must be between a-z (lowercase) or 0-9 [Default = f]
+window.BOTS_AI_KEY = 'p' // Keyboard key to enable/disable bots AI (Artificial Intelligence), value must be between a-z (lowercase) or 0-9 [Default = f]
 
-window.MACRO_FEED_KEY = 'e' // Keyboard key to make the user macro feed, value must be between a-z (lowercase) or 0-9 [Default = e]
+window.MACRO_FEED_KEY = 'w' // Keyboard key to make the user macro feed, value must be between a-z (lowercase) or 0-9 [Default = e]
 
 window.DOUBLE_SPLIT_KEY = 'q' // Keyboard key to make the user double split, value must be between a-z (lowercase) or 0-9 [Default = q]
 
@@ -267,10 +267,10 @@ function setKeysEvents(){
 function setGUI(){
     document.getElementById('advertisement').innerHTML = `
         <h2 id="botsInfo">
-            <a href="https://discord.gg/SDMNEcJ" target="_blank">Free Agar.io Bots</a>
+            <a href="" target="_blank">Free Agar.io Bots</a>
         </h2>
-        <h5 id="botsAuthor">
-            Developed by <a href="https://www.youtube.com/channel/UCZo9WmnFPWw38q65Llu5Lug" target="_blank">Nel</a>
+        <h5 id="botsAuthor">Developed by <a href="" target="_blank">Nel</a>
+        <h5 id="botsAuthor">Forked by <a href="" target="_blank">xKeksbyte and Added changes</a>
         </h5>
         <span id="statusText">Status: <b id="userStatus">Disconnected</b></span>
         <br>
@@ -380,7 +380,7 @@ function setGUIEvents(){
     })
     document.getElementById('startBots').addEventListener('click', () => {
         if(window.game.url && window.game.protocolVersion && window.game.clientVersion && !window.user.startedBots){
-            if(window.bots.name && window.bots.amount) window.connection.send(window.buffers.startBots(window.game.url, window.game.protocolVersion, window.game.clientVersion, window.user.isAlive, window.bots.name, window.bots.amount))
+            if(window.bots.name && window.bots.amount) window.connection.send(window.buffers.startBots(window.game.url.split('?')[0], window.game.protocolVersion, window.game.clientVersion, window.user.isAlive, window.bots.name, window.bots.amount))
             else alert('Bots name and amount are required before starting the bots')
         }
     })
