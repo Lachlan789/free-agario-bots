@@ -192,7 +192,6 @@ class Bot {
                     userBots.push(new Bot())
                     if(userBots.includes(this)) userBots.splice(userBots.indexOf(this), 1)
                 }, 2000)
-                console.log('[SERVER] Bot got captcha')
                 break
             case 241:
                 this.decryptionKey = reader.readInt32()
@@ -389,12 +388,12 @@ new WebSocket.Server({
                 break
             case 2:
                 for(const bot of userBots){
-                    if(bot.isAlive && bot.followMouse) bot.send(Buffer.from([17]))
+                    if(bot.isAlive && bot.followMouse && !stoppingBots && !bots.ai) bot.send(Buffer.from([17]))
                 }
                 break
             case 3:
                 for(const bot of userBots){
-                    if(bot.isAlive && bot.followMouse) bot.send(Buffer.from([21]))
+                    if(bot.isAlive && bot.followMouse && !stoppingBots && !bots.ai) bot.send(Buffer.from([21]))
                 }
                 break
             case 4:
