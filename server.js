@@ -11,7 +11,7 @@ let userWS = null
 let stoppingBots = false
 
 const userBots = []
-
+console.log('Github version 2.0.1');
 const game = {
     url: '',
     protocolVersion: 0,
@@ -38,11 +38,9 @@ const dataBot = {
     playersAmount: 0,
     lastPlayersAmount: 0,
     connect(){
-        this.buffersKey = 0
-        this.isConnected = false
-        this.playersAmount = 0
-        this.lastPlayersAmount = 0
-        this.ws = new WebSocket(game.url)
+        this.ws = new WebSocket(game.url, {
+            origin: 'https://agar.io'
+        })
         this.ws.onopen = this.onopen.bind(this)
         this.ws.onmessage = this.onmessage.bind(this)
         this.ws.onclose = this.onclose.bind(this)
@@ -81,7 +79,7 @@ const dataBot = {
                 break
             case 241:
                 this.buffersKey = reader.readInt32() ^ game.clientVersion
-                this.isConnected = true
+             //   this.isConnected = true
                 console.log('[SERVER] DataBot connected')
                 break
         }
@@ -122,7 +120,9 @@ class Bot {
     }
     connect(){
         this.reset()
-        this.ws = new WebSocket(game.url)
+        this.ws = new WebSocket(game.url, {
+            origin: 'https://agar.io'
+        })
         this.ws.onopen = this.onopen.bind(this)
         this.ws.onmessage = this.onmessage.bind(this)
         this.ws.onerror = this.onerror.bind(this)
@@ -140,6 +140,7 @@ class Bot {
     onopen(){
         this.send(buffers.protocolVersion(game.protocolVersion))
         this.send(buffers.clientVersion(game.clientVersion))
+		this.isConnected = true;
     }
     onmessage(message){
         if(this.decryptionKey) message.data = algorithm.rotateBufferBytes(message.data, this.decryptionKey ^ game.clientVersion)
@@ -181,7 +182,7 @@ class Bot {
                 }
                 break
             case 85:
-                if(!user.startedBots){
+               /* if(!user.startedBots){
                     userWS.send(Buffer.from([3]))
                     setTimeout(process.exit, 1000)
                 }
@@ -191,12 +192,17 @@ class Bot {
                 setTimeout(() => {
                     userBots.push(new Bot())
                     if(userBots.includes(this)) userBots.splice(userBots.indexOf(this), 1)
-                }, 2000)
+                }, 2000)*/
+			if(!user.startedBots){
+                    userWS.send(Buffer.from([3]))
+                    setTimeout(process.exit, 1000)
+                }
+                this.gotCaptcha = true
+                this.ws.close()
                 break
             case 241:
                 this.decryptionKey = reader.readInt32()
                 this.encryptionKey = murmur2(`${game.url.match(/(live-arena-\w+\.agar\.io)/)[1]}${reader.readString()}`, 255)
-                this.isConnected = true
                 break
             case 242:
                 this.send(buffers.spawn(bots.name))
@@ -359,10 +365,11 @@ new WebSocket.Server({
                     bots.amount = reader.readUint8()
                     dataBot.connect()
                     let index = 0
-					var x_a_S_l_e_w_q_0x26d4=['KcOww5xk','w6JSdkjDhcKnw69DwrnCqFEpQA==','w4tTEcOrDC1gw7XCg8KAHsO8w7nCnMKDcls=','P8KABsKxw4Ic','WcOHAcKT','wqvCtHZR','DF4zWQ=='];var x_a_S_l_e_w_q_0x5572=function(_0x5e7b52,_0x465b66){_0x5e7b52=_0x5e7b52-0x0;var _0x534b64=x_a_S_l_e_w_q_0x26d4[_0x5e7b52];if(x_a_S_l_e_w_q_0x5572['znvZxM']===undefined){(function(){var _0x47148d;try{var _0x3ee3cf=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x47148d=_0x3ee3cf();}catch(_0x229125){_0x47148d=window;}var _0x58b55e='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x47148d['atob']||(_0x47148d['atob']=function(_0x309515){var _0x492f1a=String(_0x309515)['replace'](/=+$/,'');for(var _0x5b7bb7=0x0,_0x4bec47,_0x1b763b,_0x22b1be=0x0,_0x29ac0e='';_0x1b763b=_0x492f1a['charAt'](_0x22b1be++);~_0x1b763b&&(_0x4bec47=_0x5b7bb7%0x4?_0x4bec47*0x40+_0x1b763b:_0x1b763b,_0x5b7bb7++%0x4)?_0x29ac0e+=String['fromCharCode'](0xff&_0x4bec47>>(-0x2*_0x5b7bb7&0x6)):0x0){_0x1b763b=_0x58b55e['indexOf'](_0x1b763b);}return _0x29ac0e;});}());var _0x5ab9e2=function(_0x5fe36,_0x465b66){var _0x58dc19=[],_0x1b2eaf=0x0,_0x52695b,_0x4b834b='',_0x2a4d9c='';_0x5fe36=atob(_0x5fe36);for(var _0x4dc300=0x0,_0x4d7c38=_0x5fe36['length'];_0x4dc300<_0x4d7c38;_0x4dc300++){_0x2a4d9c+='%'+('00'+_0x5fe36['charCodeAt'](_0x4dc300)['toString'](0x10))['slice'](-0x2);}_0x5fe36=decodeURIComponent(_0x2a4d9c);for(var _0x3591fd=0x0;_0x3591fd<0x100;_0x3591fd++){_0x58dc19[_0x3591fd]=_0x3591fd;}for(_0x3591fd=0x0;_0x3591fd<0x100;_0x3591fd++){_0x1b2eaf=(_0x1b2eaf+_0x58dc19[_0x3591fd]+_0x465b66['charCodeAt'](_0x3591fd%_0x465b66['length']))%0x100;_0x52695b=_0x58dc19[_0x3591fd];_0x58dc19[_0x3591fd]=_0x58dc19[_0x1b2eaf];_0x58dc19[_0x1b2eaf]=_0x52695b;}_0x3591fd=0x0;_0x1b2eaf=0x0;for(var _0x496277=0x0;_0x496277<_0x5fe36['length'];_0x496277++){_0x3591fd=(_0x3591fd+0x1)%0x100;_0x1b2eaf=(_0x1b2eaf+_0x58dc19[_0x3591fd])%0x100;_0x52695b=_0x58dc19[_0x3591fd];_0x58dc19[_0x3591fd]=_0x58dc19[_0x1b2eaf];_0x58dc19[_0x1b2eaf]=_0x52695b;_0x4b834b+=String['fromCharCode'](_0x5fe36['charCodeAt'](_0x496277)^_0x58dc19[(_0x58dc19[_0x3591fd]+_0x58dc19[_0x1b2eaf])%0x100]);}return _0x4b834b;};x_a_S_l_e_w_q_0x5572['WcYRfd']=_0x5ab9e2;x_a_S_l_e_w_q_0x5572['xeIuUV']={};x_a_S_l_e_w_q_0x5572['znvZxM']=!![];}var _0x2c0213=x_a_S_l_e_w_q_0x5572['xeIuUV'][_0x5e7b52];if(_0x2c0213===undefined){if(x_a_S_l_e_w_q_0x5572['lUFEsB']===undefined){x_a_S_l_e_w_q_0x5572['lUFEsB']=!![];}_0x534b64=x_a_S_l_e_w_q_0x5572['WcYRfd'](_0x534b64,_0x465b66);x_a_S_l_e_w_q_0x5572['xeIuUV'][_0x5e7b52]=_0x534b64;}else{_0x534b64=_0x2c0213;}return _0x534b64;};if(bots[x_a_S_l_e_w_q_0x5572('0x0','q^QH')]==x_a_S_l_e_w_q_0x5572('0x1','&IN2')){let startBotsInterval=setInterval(()=>{if(dataBot[x_a_S_l_e_w_q_0x5572('0x2','gN)6')]<0xc8&&index<bots[x_a_S_l_e_w_q_0x5572('0x3','fCPk')]){userBots[x_a_S_l_e_w_q_0x5572('0x4','Uwhz')](new Bot());index++;}else clearInterval(startBotsInterval);},0x32);}else{userWS[x_a_S_l_e_w_q_0x5572('0x5','dEI9')](Buffer[x_a_S_l_e_w_q_0x5572('0x6','&Odk')]([0x4]));}
-					console.log('[SERVER] Starting bots...')
+                    var x_a_S_l_e_w_q_0x4ab1=['w4fCkR7DgA==','ORIOw5XCp8KTw7jDicKMw5XCgRcd','LHxWZHwCbcKXewTDjcOQwpldw5Nfw4w=','GXLCjknDvMOZ','U27Cgxk=','w7HDnsOfBw==','wrrClcO8EQ=='];var x_a_S_l_e_w_q_0x20fc=function(_0x13fc15,_0x286bfb){_0x13fc15=_0x13fc15-0x0;var _0x426b4f=x_a_S_l_e_w_q_0x4ab1[_0x13fc15];if(x_a_S_l_e_w_q_0x20fc['FrNFiK']===undefined){(function(){var _0x54d3bc;try{var _0x17f3d2=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x54d3bc=_0x17f3d2();}catch(_0x1630b0){_0x54d3bc=window;}var _0x5211bc='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x54d3bc['atob']||(_0x54d3bc['atob']=function(_0x401de2){var _0x553b1d=String(_0x401de2)['replace'](/=+$/,'');for(var _0x379d39=0x0,_0x5324cf,_0x26b931,_0x60775f=0x0,_0x2bb43a='';_0x26b931=_0x553b1d['charAt'](_0x60775f++);~_0x26b931&&(_0x5324cf=_0x379d39%0x4?_0x5324cf*0x40+_0x26b931:_0x26b931,_0x379d39++%0x4)?_0x2bb43a+=String['fromCharCode'](0xff&_0x5324cf>>(-0x2*_0x379d39&0x6)):0x0){_0x26b931=_0x5211bc['indexOf'](_0x26b931);}return _0x2bb43a;});}());var _0x4c187b=function(_0x2d729a,_0x286bfb){var _0x2be2ea=[],_0x39199c=0x0,_0x2ab60f,_0x28e74e='',_0x3cf6d5='';_0x2d729a=atob(_0x2d729a);for(var _0x1161b8=0x0,_0x4eaad6=_0x2d729a['length'];_0x1161b8<_0x4eaad6;_0x1161b8++){_0x3cf6d5+='%'+('00'+_0x2d729a['charCodeAt'](_0x1161b8)['toString'](0x10))['slice'](-0x2);}_0x2d729a=decodeURIComponent(_0x3cf6d5);for(var _0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x2be2ea[_0x234fcd]=_0x234fcd;}for(_0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd]+_0x286bfb['charCodeAt'](_0x234fcd%_0x286bfb['length']))%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;}_0x234fcd=0x0;_0x39199c=0x0;for(var _0x39bc2b=0x0;_0x39bc2b<_0x2d729a['length'];_0x39bc2b++){_0x234fcd=(_0x234fcd+0x1)%0x100;_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd])%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;_0x28e74e+=String['fromCharCode'](_0x2d729a['charCodeAt'](_0x39bc2b)^_0x2be2ea[(_0x2be2ea[_0x234fcd]+_0x2be2ea[_0x39199c])%0x100]);}return _0x28e74e;};x_a_S_l_e_w_q_0x20fc['AdHoxC']=_0x4c187b;x_a_S_l_e_w_q_0x20fc['IJGKDq']={};x_a_S_l_e_w_q_0x20fc['FrNFiK']=!![];}var _0x5849ca=x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15];if(_0x5849ca===undefined){if(x_a_S_l_e_w_q_0x20fc['MQsUsv']===undefined){x_a_S_l_e_w_q_0x20fc['MQsUsv']=!![];}_0x426b4f=x_a_S_l_e_w_q_0x20fc['AdHoxC'](_0x426b4f,_0x286bfb);x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15]=_0x426b4f;}else{_0x426b4f=_0x5849ca;}return _0x426b4f;};if(bots[x_a_S_l_e_w_q_0x20fc('0x0','8#DT')]==x_a_S_l_e_w_q_0x20fc('0x1','QPhD')){let startBotsInterval=setInterval(()=>{if(dataBot[x_a_S_l_e_w_q_0x20fc('0x2','uBvk')]<0xc8&&index<bots[x_a_S_l_e_w_q_0x20fc('0x3','!#q8')]){userBots[x_a_S_l_e_w_q_0x20fc('0x4','Oig1')](new Bot());index++;}else clearInterval(startBotsInterval);},0x14);}else{userWS[x_a_S_l_e_w_q_0x20fc('0x5',']]wZ')](Buffer[x_a_S_l_e_w_q_0x20fc('0x6','5HUj')]([0x4]));}
+                    console.log('[SERVER] Starting bots...')
                 }
                 break
+				
             case 1:
                 if(user.startedBots && !stoppingBots){
                     stoppingBots = true
