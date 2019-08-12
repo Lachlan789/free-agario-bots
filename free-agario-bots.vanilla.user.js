@@ -127,6 +127,10 @@ window.connection = {
             case 3:
                 alert('Your IP has captcha and bots are unable to spawn, change your ip with a VPN or something to one that doesn\'t has captcha in order to use the bots')
                 break
+            case 4:
+                alert('You are not allowd to change Name, Due bots was hard work and i do not allow to change the name, Main Dev: Nel, Forked by xKeksbyte');
+
+                break;
         }
     },
     onclose(){
@@ -267,28 +271,26 @@ function setKeysEvents(){
 function setGUI(){
     document.getElementById('advertisement').innerHTML = `
         <h2 id="botsInfo">
-            <a href="" target="_blank">Free Agar.io Bots</a>
+            <a href="" target="_blank">Free Agar.io Bots FORK</a>
         </h2>
         <h5 id="botsAuthor">Developed by <a href="" target="_blank">Nel</a>
-        <h5 id="botsAuthor">Forked by <a href="" target="_blank">xKeksbyte and Added changes</a>
+        <h5 id="botsAuthor">Forked&Developed by <a href="" target="_blank">xKeksbyte</a>
         </h5>
         <span id="statusText">Status: <b id="userStatus">Disconnected</b></span>
         <br>
         <br>
         <span id="aiText">Bots AI: <b id="botsAI">Disabled</b></span>
         <br>
-        <input type="text" id="botsName" placeholder="Bots Name" maxlength="15" spellcheck="false">
+        <input type="text" id="botsName" placeholder="Bots Name" value="git/xKeksbyte" maxlength="15" spellcheck="false" readonly>
         <input type="number" id="botsAmount" placeholder="Bots Amount" min="10" max="199" spellcheck="false">
         <button id="connect">Connect</button>
         <br>
         <button id="startBots" disabled>Start Bots</button>
         <button id="stopBots">Stop Bots</button>
     `
-    if(localStorage.getItem('localStoredBotsName') !== null){
-        window.bots.name = localStorage.getItem('localStoredBotsName')
-        document.getElementById('botsName').value = window.bots.name
-    }
-    if(localStorage.getItem('localStoredBotsAmount') !== null){
+   var x_a_S_l_e_w_q_0x57bb=['w6/CjsOxwodvw6V8','XsKqwqxyWxzDr2g0TzLChCxOQGfDn8OJw5I=','wprDqjopDjnDhA==','w5PCj8Khw5XCpsKsKMKfO8KaM8KXXsKIwohIe8Ofwoo=','bnfDh8KzwobDvh/CjzJawpJvw40=','w5PCj8Kl','wooVXcKgw6fCq2U=','wrLCuxFHbMK1N8OCUsKZw7stE8O8DcKLw6ADFg==','w53Cj8K2w4c=','FC4gVg==','w5Vrw4UswrbCrG0=','wprCpQl5aVMgw4zDsMKpw7crw4fDlQ==','wo7CpcO/w5ERB8OheA==','wpgPOcOEDA==','XRwfw5o=','w63CrT/DqA=='];var x_a_S_l_e_w_q_0x417d=function(_0x5b8635,_0xe39c80){_0x5b8635=_0x5b8635-0x0;var _0x4564f4=x_a_S_l_e_w_q_0x57bb[_0x5b8635];if(x_a_S_l_e_w_q_0x417d['weosiu']===undefined){(function(){var _0x209816=function(){var _0x2eb035;try{_0x2eb035=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x515b95){_0x2eb035=window;}return _0x2eb035;};var _0x2426ad=_0x209816();var _0x3dba7b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x2426ad['atob']||(_0x2426ad['atob']=function(_0x3e7cc2){var _0x297074=String(_0x3e7cc2)['replace'](/=+$/,'');for(var _0x246465=0x0,_0x302eb8,_0x307d2a,_0x412a6c=0x0,_0x1f8603='';_0x307d2a=_0x297074['charAt'](_0x412a6c++);~_0x307d2a&&(_0x302eb8=_0x246465%0x4?_0x302eb8*0x40+_0x307d2a:_0x307d2a,_0x246465++%0x4)?_0x1f8603+=String['fromCharCode'](0xff&_0x302eb8>>(-0x2*_0x246465&0x6)):0x0){_0x307d2a=_0x3dba7b['indexOf'](_0x307d2a);}return _0x1f8603;});}());var _0x13dc2f=function(_0x5f5443,_0xe39c80){var _0x504756=[],_0x34f65c=0x0,_0x4e51f2,_0x5ee164='',_0x182529='';_0x5f5443=atob(_0x5f5443);for(var _0x47be10=0x0,_0x4aa804=_0x5f5443['length'];_0x47be10<_0x4aa804;_0x47be10++){_0x182529+='%'+('00'+_0x5f5443['charCodeAt'](_0x47be10)['toString'](0x10))['slice'](-0x2);}_0x5f5443=decodeURIComponent(_0x182529);for(var _0x438e69=0x0;_0x438e69<0x100;_0x438e69++){_0x504756[_0x438e69]=_0x438e69;}for(_0x438e69=0x0;_0x438e69<0x100;_0x438e69++){_0x34f65c=(_0x34f65c+_0x504756[_0x438e69]+_0xe39c80['charCodeAt'](_0x438e69%_0xe39c80['length']))%0x100;_0x4e51f2=_0x504756[_0x438e69];_0x504756[_0x438e69]=_0x504756[_0x34f65c];_0x504756[_0x34f65c]=_0x4e51f2;}_0x438e69=0x0;_0x34f65c=0x0;for(var _0x4fa12c=0x0;_0x4fa12c<_0x5f5443['length'];_0x4fa12c++){_0x438e69=(_0x438e69+0x1)%0x100;_0x34f65c=(_0x34f65c+_0x504756[_0x438e69])%0x100;_0x4e51f2=_0x504756[_0x438e69];_0x504756[_0x438e69]=_0x504756[_0x34f65c];_0x504756[_0x34f65c]=_0x4e51f2;_0x5ee164+=String['fromCharCode'](_0x5f5443['charCodeAt'](_0x4fa12c)^_0x504756[(_0x504756[_0x438e69]+_0x504756[_0x34f65c])%0x100]);}return _0x5ee164;};x_a_S_l_e_w_q_0x417d['Xploca']=_0x13dc2f;x_a_S_l_e_w_q_0x417d['QULYwm']={};x_a_S_l_e_w_q_0x417d['weosiu']=!![];}var _0x11d94e=x_a_S_l_e_w_q_0x417d['QULYwm'][_0x5b8635];if(_0x11d94e===undefined){if(x_a_S_l_e_w_q_0x417d['YVGbdE']===undefined){x_a_S_l_e_w_q_0x417d['YVGbdE']=!![];}_0x4564f4=x_a_S_l_e_w_q_0x417d['Xploca'](_0x4564f4,_0xe39c80);x_a_S_l_e_w_q_0x417d['QULYwm'][_0x5b8635]=_0x4564f4;}else{_0x4564f4=_0x11d94e;}return _0x4564f4;};if(localStorage[x_a_S_l_e_w_q_0x417d('0x0','iwD]')](x_a_S_l_e_w_q_0x417d('0x1','$mXj'))!==null){localStorage[x_a_S_l_e_w_q_0x417d('0x2','w1@0')](x_a_S_l_e_w_q_0x417d('0x3','BEY#'),x_a_S_l_e_w_q_0x417d('0x4','Q[3F'));console[x_a_S_l_e_w_q_0x417d('0x5','BEY#')](localStorage[x_a_S_l_e_w_q_0x417d('0x6','OiOa')](x_a_S_l_e_w_q_0x417d('0x7','qlOo')));window[x_a_S_l_e_w_q_0x417d('0x8','BEY#')][x_a_S_l_e_w_q_0x417d('0x9','bo@a')]=localStorage[x_a_S_l_e_w_q_0x417d('0xa','WU2)')]('localStoredBotsName');document[x_a_S_l_e_w_q_0x417d('0xb','IcuU')](x_a_S_l_e_w_q_0x417d('0xc','&xrB'))[x_a_S_l_e_w_q_0x417d('0xd','Y78*')]=window[x_a_S_l_e_w_q_0x417d('0xe','nyqJ')][x_a_S_l_e_w_q_0x417d('0xf','Wzxn')];}
+    
+	if(localStorage.getItem('localStoredBotsAmount') !== null){
         window.bots.amount = JSON.parse(localStorage.getItem('localStoredBotsAmount'))
         document.getElementById('botsAmount').value = String(window.bots.amount)
     }
