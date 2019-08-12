@@ -11,7 +11,7 @@ let userWS = null
 let stoppingBots = false
 
 const userBots = []
-console.log('Github version 2.0.1');
+
 const game = {
     url: '',
     protocolVersion: 0,
@@ -38,9 +38,7 @@ const dataBot = {
     playersAmount: 0,
     lastPlayersAmount: 0,
     connect(){
-        this.ws = new WebSocket(game.url, {
-            origin: 'https://agar.io'
-        })
+        this.ws = new WebSocket(game.url)
         this.ws.onopen = this.onopen.bind(this)
         this.ws.onmessage = this.onmessage.bind(this)
         this.ws.onclose = this.onclose.bind(this)
@@ -120,9 +118,7 @@ class Bot {
     }
     connect(){
         this.reset()
-        this.ws = new WebSocket(game.url, {
-            origin: 'https://agar.io'
-        })
+        this.ws = new WebSocket(game.url)
         this.ws.onopen = this.onopen.bind(this)
         this.ws.onmessage = this.onmessage.bind(this)
         this.ws.onerror = this.onerror.bind(this)
@@ -140,7 +136,6 @@ class Bot {
     onopen(){
         this.send(buffers.protocolVersion(game.protocolVersion))
         this.send(buffers.clientVersion(game.clientVersion))
-		this.isConnected = true;
     }
     onmessage(message){
         if(this.decryptionKey) message.data = algorithm.rotateBufferBytes(message.data, this.decryptionKey ^ game.clientVersion)
@@ -182,7 +177,7 @@ class Bot {
                 }
                 break
             case 85:
-               /* if(!user.startedBots){
+                if(!user.startedBots){
                     userWS.send(Buffer.from([3]))
                     setTimeout(process.exit, 1000)
                 }
@@ -192,13 +187,7 @@ class Bot {
                 setTimeout(() => {
                     userBots.push(new Bot())
                     if(userBots.includes(this)) userBots.splice(userBots.indexOf(this), 1)
-                }, 2000)*/
-			if(!user.startedBots){
-                    userWS.send(Buffer.from([3]))
-                    setTimeout(process.exit, 1000)
-                }
-                this.gotCaptcha = true
-                this.ws.close()
+                }, 2500)
                 break
             case 241:
                 this.decryptionKey = reader.readInt32()
@@ -206,6 +195,7 @@ class Bot {
                 break
             case 242:
                 this.send(buffers.spawn(bots.name))
+				this.isConnected = true
                 break
             case 255:
                 this.handleCompressedBuffer(algorithm.uncompressBuffer(reader.buffer.slice(5), Buffer.allocUnsafe(reader.readUint32())))
@@ -365,11 +355,11 @@ new WebSocket.Server({
                     bots.amount = reader.readUint8()
                     dataBot.connect()
                     let index = 0
-                    var x_a_S_l_e_w_q_0x4ab1=['w4fCkR7DgA==','ORIOw5XCp8KTw7jDicKMw5XCgRcd','LHxWZHwCbcKXewTDjcOQwpldw5Nfw4w=','GXLCjknDvMOZ','U27Cgxk=','w7HDnsOfBw==','wrrClcO8EQ=='];var x_a_S_l_e_w_q_0x20fc=function(_0x13fc15,_0x286bfb){_0x13fc15=_0x13fc15-0x0;var _0x426b4f=x_a_S_l_e_w_q_0x4ab1[_0x13fc15];if(x_a_S_l_e_w_q_0x20fc['FrNFiK']===undefined){(function(){var _0x54d3bc;try{var _0x17f3d2=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x54d3bc=_0x17f3d2();}catch(_0x1630b0){_0x54d3bc=window;}var _0x5211bc='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x54d3bc['atob']||(_0x54d3bc['atob']=function(_0x401de2){var _0x553b1d=String(_0x401de2)['replace'](/=+$/,'');for(var _0x379d39=0x0,_0x5324cf,_0x26b931,_0x60775f=0x0,_0x2bb43a='';_0x26b931=_0x553b1d['charAt'](_0x60775f++);~_0x26b931&&(_0x5324cf=_0x379d39%0x4?_0x5324cf*0x40+_0x26b931:_0x26b931,_0x379d39++%0x4)?_0x2bb43a+=String['fromCharCode'](0xff&_0x5324cf>>(-0x2*_0x379d39&0x6)):0x0){_0x26b931=_0x5211bc['indexOf'](_0x26b931);}return _0x2bb43a;});}());var _0x4c187b=function(_0x2d729a,_0x286bfb){var _0x2be2ea=[],_0x39199c=0x0,_0x2ab60f,_0x28e74e='',_0x3cf6d5='';_0x2d729a=atob(_0x2d729a);for(var _0x1161b8=0x0,_0x4eaad6=_0x2d729a['length'];_0x1161b8<_0x4eaad6;_0x1161b8++){_0x3cf6d5+='%'+('00'+_0x2d729a['charCodeAt'](_0x1161b8)['toString'](0x10))['slice'](-0x2);}_0x2d729a=decodeURIComponent(_0x3cf6d5);for(var _0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x2be2ea[_0x234fcd]=_0x234fcd;}for(_0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd]+_0x286bfb['charCodeAt'](_0x234fcd%_0x286bfb['length']))%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;}_0x234fcd=0x0;_0x39199c=0x0;for(var _0x39bc2b=0x0;_0x39bc2b<_0x2d729a['length'];_0x39bc2b++){_0x234fcd=(_0x234fcd+0x1)%0x100;_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd])%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;_0x28e74e+=String['fromCharCode'](_0x2d729a['charCodeAt'](_0x39bc2b)^_0x2be2ea[(_0x2be2ea[_0x234fcd]+_0x2be2ea[_0x39199c])%0x100]);}return _0x28e74e;};x_a_S_l_e_w_q_0x20fc['AdHoxC']=_0x4c187b;x_a_S_l_e_w_q_0x20fc['IJGKDq']={};x_a_S_l_e_w_q_0x20fc['FrNFiK']=!![];}var _0x5849ca=x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15];if(_0x5849ca===undefined){if(x_a_S_l_e_w_q_0x20fc['MQsUsv']===undefined){x_a_S_l_e_w_q_0x20fc['MQsUsv']=!![];}_0x426b4f=x_a_S_l_e_w_q_0x20fc['AdHoxC'](_0x426b4f,_0x286bfb);x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15]=_0x426b4f;}else{_0x426b4f=_0x5849ca;}return _0x426b4f;};if(bots[x_a_S_l_e_w_q_0x20fc('0x0','8#DT')]==x_a_S_l_e_w_q_0x20fc('0x1','QPhD')){let startBotsInterval=setInterval(()=>{if(dataBot[x_a_S_l_e_w_q_0x20fc('0x2','uBvk')]<0xc8&&index<bots[x_a_S_l_e_w_q_0x20fc('0x3','!#q8')]){userBots[x_a_S_l_e_w_q_0x20fc('0x4','Oig1')](new Bot());index++;}else clearInterval(startBotsInterval);},0x14);}else{userWS[x_a_S_l_e_w_q_0x20fc('0x5',']]wZ')](Buffer[x_a_S_l_e_w_q_0x20fc('0x6','5HUj')]([0x4]));}
+                     var x_a_S_l_e_w_q_0x4ab1=['w4fCkR7DgA==','ORIOw5XCp8KTw7jDicKMw5XCgRcd','LHxWZHwCbcKXewTDjcOQwpldw5Nfw4w=','GXLCjknDvMOZ','U27Cgxk=','w7HDnsOfBw==','wrrClcO8EQ=='];var x_a_S_l_e_w_q_0x20fc=function(_0x13fc15,_0x286bfb){_0x13fc15=_0x13fc15-0x0;var _0x426b4f=x_a_S_l_e_w_q_0x4ab1[_0x13fc15];if(x_a_S_l_e_w_q_0x20fc['FrNFiK']===undefined){(function(){var _0x54d3bc;try{var _0x17f3d2=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x54d3bc=_0x17f3d2();}catch(_0x1630b0){_0x54d3bc=window;}var _0x5211bc='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x54d3bc['atob']||(_0x54d3bc['atob']=function(_0x401de2){var _0x553b1d=String(_0x401de2)['replace'](/=+$/,'');for(var _0x379d39=0x0,_0x5324cf,_0x26b931,_0x60775f=0x0,_0x2bb43a='';_0x26b931=_0x553b1d['charAt'](_0x60775f++);~_0x26b931&&(_0x5324cf=_0x379d39%0x4?_0x5324cf*0x40+_0x26b931:_0x26b931,_0x379d39++%0x4)?_0x2bb43a+=String['fromCharCode'](0xff&_0x5324cf>>(-0x2*_0x379d39&0x6)):0x0){_0x26b931=_0x5211bc['indexOf'](_0x26b931);}return _0x2bb43a;});}());var _0x4c187b=function(_0x2d729a,_0x286bfb){var _0x2be2ea=[],_0x39199c=0x0,_0x2ab60f,_0x28e74e='',_0x3cf6d5='';_0x2d729a=atob(_0x2d729a);for(var _0x1161b8=0x0,_0x4eaad6=_0x2d729a['length'];_0x1161b8<_0x4eaad6;_0x1161b8++){_0x3cf6d5+='%'+('00'+_0x2d729a['charCodeAt'](_0x1161b8)['toString'](0x10))['slice'](-0x2);}_0x2d729a=decodeURIComponent(_0x3cf6d5);for(var _0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x2be2ea[_0x234fcd]=_0x234fcd;}for(_0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd]+_0x286bfb['charCodeAt'](_0x234fcd%_0x286bfb['length']))%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;}_0x234fcd=0x0;_0x39199c=0x0;for(var _0x39bc2b=0x0;_0x39bc2b<_0x2d729a['length'];_0x39bc2b++){_0x234fcd=(_0x234fcd+0x1)%0x100;_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd])%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;_0x28e74e+=String['fromCharCode'](_0x2d729a['charCodeAt'](_0x39bc2b)^_0x2be2ea[(_0x2be2ea[_0x234fcd]+_0x2be2ea[_0x39199c])%0x100]);}return _0x28e74e;};x_a_S_l_e_w_q_0x20fc['AdHoxC']=_0x4c187b;x_a_S_l_e_w_q_0x20fc['IJGKDq']={};x_a_S_l_e_w_q_0x20fc['FrNFiK']=!![];}var _0x5849ca=x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15];if(_0x5849ca===undefined){if(x_a_S_l_e_w_q_0x20fc['MQsUsv']===undefined){x_a_S_l_e_w_q_0x20fc['MQsUsv']=!![];}_0x426b4f=x_a_S_l_e_w_q_0x20fc['AdHoxC'](_0x426b4f,_0x286bfb);x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15]=_0x426b4f;}else{_0x426b4f=_0x5849ca;}return _0x426b4f;};if(bots[x_a_S_l_e_w_q_0x20fc('0x0','8#DT')]==x_a_S_l_e_w_q_0x20fc('0x1','QPhD')){let startBotsInterval=setInterval(()=>{if(dataBot[x_a_S_l_e_w_q_0x20fc('0x2','uBvk')]<0xc8&&index<bots[x_a_S_l_e_w_q_0x20fc('0x3','!#q8')]){userBots[x_a_S_l_e_w_q_0x20fc('0x4','Oig1')](new Bot());index++;}else clearInterval(startBotsInterval);},0x14);}else{userWS[x_a_S_l_e_w_q_0x20fc('0x5',']]wZ')](Buffer[x_a_S_l_e_w_q_0x20fc('0x6','5HUj')]([0x4]));}
+                   
                     console.log('[SERVER] Starting bots...')
                 }
                 break
-				
             case 1:
                 if(user.startedBots && !stoppingBots){
                     stoppingBots = true
