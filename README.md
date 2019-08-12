@@ -1,3 +1,7 @@
+## Project
+This project was from Nelthedev
+I will continue it / Improve it at my way :D
+
 # free-agario-bots
 Free open source agar.io bots
 
