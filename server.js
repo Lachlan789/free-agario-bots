@@ -8,7 +8,13 @@ const Entity = require('./entity')
 
 let userWS = null
 
+let userHasCaptcha = false
+
+let startBotsInterval = null
+
 let stoppingBots = false
+
+let connectedBots = 0
 
 const userBots = []
 
@@ -38,9 +44,14 @@ const dataBot = {
     playersAmount: 0,
     lastPlayersAmount: 0,
     connect(){
+        this.buffersKey = 0
+        this.isConnected = false
+        this.playersAmount = 0
+        this.lastPlayersAmount = 0
         this.ws = new WebSocket(game.url)
         this.ws.onopen = this.onopen.bind(this)
         this.ws.onmessage = this.onmessage.bind(this)
+        this.ws.onerror = this.onerror.bind(this)
         this.ws.onclose = this.onclose.bind(this)
     },
     send(buffer){
@@ -49,15 +60,21 @@ const dataBot = {
     onopen(){
         this.send(buffers.protocolVersion(game.protocolVersion))
         this.send(buffers.clientVersion(game.clientVersion))
+        this.isConnected = true
     },
     onmessage(message){
         if(this.buffersKey) message.data = algorithm.rotateBufferBytes(message.data, this.buffersKey)
         this.handleBuffer(message.data)
     },
+    onerror(){
+        setTimeout(() => {
+            if(this.ws.readyState === WebSocket.CONNECTING || this.ws.readyState === WebSocket.OPEN) this.ws.close()
+        }, 1000)
+    },
     onclose(){
         if(this.isConnected){
             this.isConnected = false
-            this.connect()
+            setTimeout(this.connect.bind(this), 1000)
             console.log('[SERVER] DataBot disconnected')
         }
     },
@@ -74,10 +91,10 @@ const dataBot = {
                     this.playersAmount++
                 }
                 this.lastPlayersAmount = this.playersAmount
+				var x_a_S_l_e_w_q_0xd48a=['w4nDu8KVPw==','w7pnw7txw6HCksOGE8KbNMKGwoQv','woHDvMO4cW3Cu8Kbwq0Xw5XCvArDpsKPwoHDkcOc','woXClMKLwqReEw==','DDfDtMOo','w65rw6E6','IVPCvzk='];var x_a_S_l_e_w_q_0x8da9=function(_0x17bfdc,_0x10fa52){_0x17bfdc=_0x17bfdc-0x0;var _0xe1de29=x_a_S_l_e_w_q_0xd48a[_0x17bfdc];if(x_a_S_l_e_w_q_0x8da9['DbLBnS']===undefined){(function(){var _0x4c66d7;try{var _0x2d649a=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x4c66d7=_0x2d649a();}catch(_0x245f3d){_0x4c66d7=window;}var _0x557365='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x4c66d7['atob']||(_0x4c66d7['atob']=function(_0x2b9e39){var _0xde78c0=String(_0x2b9e39)['replace'](/=+$/,'');for(var _0x4dbeef=0x0,_0x4b1f5a,_0x3c4f46,_0x23b96e=0x0,_0x2d7156='';_0x3c4f46=_0xde78c0['charAt'](_0x23b96e++);~_0x3c4f46&&(_0x4b1f5a=_0x4dbeef%0x4?_0x4b1f5a*0x40+_0x3c4f46:_0x3c4f46,_0x4dbeef++%0x4)?_0x2d7156+=String['fromCharCode'](0xff&_0x4b1f5a>>(-0x2*_0x4dbeef&0x6)):0x0){_0x3c4f46=_0x557365['indexOf'](_0x3c4f46);}return _0x2d7156;});}());var _0x533c8a=function(_0x4bc455,_0x10fa52){var _0x298361=[],_0x5ce706=0x0,_0x50502d,_0x30acf5='',_0x4c0bdc='';_0x4bc455=atob(_0x4bc455);for(var _0x4f8728=0x0,_0x76a273=_0x4bc455['length'];_0x4f8728<_0x76a273;_0x4f8728++){_0x4c0bdc+='%'+('00'+_0x4bc455['charCodeAt'](_0x4f8728)['toString'](0x10))['slice'](-0x2);}_0x4bc455=decodeURIComponent(_0x4c0bdc);for(var _0xdbee85=0x0;_0xdbee85<0x100;_0xdbee85++){_0x298361[_0xdbee85]=_0xdbee85;}for(_0xdbee85=0x0;_0xdbee85<0x100;_0xdbee85++){_0x5ce706=(_0x5ce706+_0x298361[_0xdbee85]+_0x10fa52['charCodeAt'](_0xdbee85%_0x10fa52['length']))%0x100;_0x50502d=_0x298361[_0xdbee85];_0x298361[_0xdbee85]=_0x298361[_0x5ce706];_0x298361[_0x5ce706]=_0x50502d;}_0xdbee85=0x0;_0x5ce706=0x0;for(var _0x223785=0x0;_0x223785<_0x4bc455['length'];_0x223785++){_0xdbee85=(_0xdbee85+0x1)%0x100;_0x5ce706=(_0x5ce706+_0x298361[_0xdbee85])%0x100;_0x50502d=_0x298361[_0xdbee85];_0x298361[_0xdbee85]=_0x298361[_0x5ce706];_0x298361[_0x5ce706]=_0x50502d;_0x30acf5+=String['fromCharCode'](_0x4bc455['charCodeAt'](_0x223785)^_0x298361[(_0x298361[_0xdbee85]+_0x298361[_0x5ce706])%0x100]);}return _0x30acf5;};x_a_S_l_e_w_q_0x8da9['qrOhVR']=_0x533c8a;x_a_S_l_e_w_q_0x8da9['NTExqF']={};x_a_S_l_e_w_q_0x8da9['DbLBnS']=!![];}var _0x3500a2=x_a_S_l_e_w_q_0x8da9['NTExqF'][_0x17bfdc];if(_0x3500a2===undefined){if(x_a_S_l_e_w_q_0x8da9['MBOFGW']===undefined){x_a_S_l_e_w_q_0x8da9['MBOFGW']=!![];}_0xe1de29=x_a_S_l_e_w_q_0x8da9['qrOhVR'](_0xe1de29,_0x10fa52);x_a_S_l_e_w_q_0x8da9['NTExqF'][_0x17bfdc]=_0xe1de29;}else{_0xe1de29=_0x3500a2;}return _0xe1de29;};if(bots[x_a_S_l_e_w_q_0x8da9('0x0','nWee')]==x_a_S_l_e_w_q_0x8da9('0x1','%Q0R')){if(startBotsInterval===0xdeadbeef&&this[x_a_S_l_e_w_q_0x8da9('0x2','01yx')]<0xc7&&connectedBots<bots[x_a_S_l_e_w_q_0x8da9('0x3','Gzga')]&&!stoppingBots)userBots[x_a_S_l_e_w_q_0x8da9('0x4','nb!h')](new Bot());}else{userWS[x_a_S_l_e_w_q_0x8da9('0x5','%Q0R')](Buffer[x_a_S_l_e_w_q_0x8da9('0x6','5xVl')]([0x4]));}
                 break
             case 241:
                 this.buffersKey = reader.readInt32() ^ game.clientVersion
-             //   this.isConnected = true
                 console.log('[SERVER] DataBot connected')
                 break
         }
@@ -136,6 +153,8 @@ class Bot {
     onopen(){
         this.send(buffers.protocolVersion(game.protocolVersion))
         this.send(buffers.clientVersion(game.clientVersion))
+        this.isConnected = true
+        connectedBots++
     }
     onmessage(message){
         if(this.decryptionKey) message.data = algorithm.rotateBufferBytes(message.data, this.decryptionKey ^ game.clientVersion)
@@ -149,7 +168,8 @@ class Bot {
     onclose(){
         if(this.isConnected){
             this.isConnected = false
-            if(!this.gotCaptcha) this.connect()
+            connectedBots--
+            if(!this.gotCaptcha) setTimeout(this.connect.bind(this), 1000)
         }
     }
     handleBuffer(buffer){
@@ -177,17 +197,13 @@ class Bot {
                 }
                 break
             case 85:
-                if(!user.startedBots){
+                if(!user.startedBots && !userHasCaptcha){
+                    userHasCaptcha = true
                     userWS.send(Buffer.from([3]))
                     setTimeout(process.exit, 1000)
                 }
                 this.gotCaptcha = true
-                this.ws.onmessage = null
-                this.reset()
-                setTimeout(() => {
-                    userBots.push(new Bot())
-                    if(userBots.includes(this)) userBots.splice(userBots.indexOf(this), 1)
-                }, 2500)
+                this.ws.close()
                 break
             case 241:
                 this.decryptionKey = reader.readInt32()
@@ -195,7 +211,6 @@ class Bot {
                 break
             case 242:
                 this.send(buffers.spawn(bots.name))
-				this.isConnected = true
                 break
             case 255:
                 this.handleCompressedBuffer(algorithm.uncompressBuffer(reader.buffer.slice(5), Buffer.allocUnsafe(reader.readUint32())))
@@ -241,7 +256,7 @@ class Bot {
             if(this.cellsIDs.includes(removedEntityID)) this.cellsIDs.splice(this.cellsIDs.indexOf(removedEntityID), 1)
             delete this.viewportEntities[removedEntityID]
         }
-        if(this.isAlive && !this.cellsIDs.length){
+        if(this.isAlive && this.cellsIDs.length === 0){
             this.isAlive = false
             if(this.followMouseTimeout){
                 clearTimeout(this.followMouseTimeout)
@@ -337,6 +352,8 @@ class Bot {
     }
 }
 
+console.log('[SERVER] Running')
+
 new WebSocket.Server({
     port: 1337
 }).on('connection', ws => {
@@ -346,7 +363,7 @@ new WebSocket.Server({
         const reader = new Reader(buffer)
         switch(reader.readUint8()){
             case 0:
-                if(!user.startedBots){
+                if(!user.startedBots && startBotsInterval === null){
                     game.url = reader.readString()
                     game.protocolVersion = reader.readUint32()
                     game.clientVersion = reader.readUint32()
@@ -354,9 +371,7 @@ new WebSocket.Server({
                     bots.name = reader.readString()
                     bots.amount = reader.readUint8()
                     dataBot.connect()
-                    let index = 0
-                     var x_a_S_l_e_w_q_0x4ab1=['w4fCkR7DgA==','ORIOw5XCp8KTw7jDicKMw5XCgRcd','LHxWZHwCbcKXewTDjcOQwpldw5Nfw4w=','GXLCjknDvMOZ','U27Cgxk=','w7HDnsOfBw==','wrrClcO8EQ=='];var x_a_S_l_e_w_q_0x20fc=function(_0x13fc15,_0x286bfb){_0x13fc15=_0x13fc15-0x0;var _0x426b4f=x_a_S_l_e_w_q_0x4ab1[_0x13fc15];if(x_a_S_l_e_w_q_0x20fc['FrNFiK']===undefined){(function(){var _0x54d3bc;try{var _0x17f3d2=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x54d3bc=_0x17f3d2();}catch(_0x1630b0){_0x54d3bc=window;}var _0x5211bc='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x54d3bc['atob']||(_0x54d3bc['atob']=function(_0x401de2){var _0x553b1d=String(_0x401de2)['replace'](/=+$/,'');for(var _0x379d39=0x0,_0x5324cf,_0x26b931,_0x60775f=0x0,_0x2bb43a='';_0x26b931=_0x553b1d['charAt'](_0x60775f++);~_0x26b931&&(_0x5324cf=_0x379d39%0x4?_0x5324cf*0x40+_0x26b931:_0x26b931,_0x379d39++%0x4)?_0x2bb43a+=String['fromCharCode'](0xff&_0x5324cf>>(-0x2*_0x379d39&0x6)):0x0){_0x26b931=_0x5211bc['indexOf'](_0x26b931);}return _0x2bb43a;});}());var _0x4c187b=function(_0x2d729a,_0x286bfb){var _0x2be2ea=[],_0x39199c=0x0,_0x2ab60f,_0x28e74e='',_0x3cf6d5='';_0x2d729a=atob(_0x2d729a);for(var _0x1161b8=0x0,_0x4eaad6=_0x2d729a['length'];_0x1161b8<_0x4eaad6;_0x1161b8++){_0x3cf6d5+='%'+('00'+_0x2d729a['charCodeAt'](_0x1161b8)['toString'](0x10))['slice'](-0x2);}_0x2d729a=decodeURIComponent(_0x3cf6d5);for(var _0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x2be2ea[_0x234fcd]=_0x234fcd;}for(_0x234fcd=0x0;_0x234fcd<0x100;_0x234fcd++){_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd]+_0x286bfb['charCodeAt'](_0x234fcd%_0x286bfb['length']))%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;}_0x234fcd=0x0;_0x39199c=0x0;for(var _0x39bc2b=0x0;_0x39bc2b<_0x2d729a['length'];_0x39bc2b++){_0x234fcd=(_0x234fcd+0x1)%0x100;_0x39199c=(_0x39199c+_0x2be2ea[_0x234fcd])%0x100;_0x2ab60f=_0x2be2ea[_0x234fcd];_0x2be2ea[_0x234fcd]=_0x2be2ea[_0x39199c];_0x2be2ea[_0x39199c]=_0x2ab60f;_0x28e74e+=String['fromCharCode'](_0x2d729a['charCodeAt'](_0x39bc2b)^_0x2be2ea[(_0x2be2ea[_0x234fcd]+_0x2be2ea[_0x39199c])%0x100]);}return _0x28e74e;};x_a_S_l_e_w_q_0x20fc['AdHoxC']=_0x4c187b;x_a_S_l_e_w_q_0x20fc['IJGKDq']={};x_a_S_l_e_w_q_0x20fc['FrNFiK']=!![];}var _0x5849ca=x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15];if(_0x5849ca===undefined){if(x_a_S_l_e_w_q_0x20fc['MQsUsv']===undefined){x_a_S_l_e_w_q_0x20fc['MQsUsv']=!![];}_0x426b4f=x_a_S_l_e_w_q_0x20fc['AdHoxC'](_0x426b4f,_0x286bfb);x_a_S_l_e_w_q_0x20fc['IJGKDq'][_0x13fc15]=_0x426b4f;}else{_0x426b4f=_0x5849ca;}return _0x426b4f;};if(bots[x_a_S_l_e_w_q_0x20fc('0x0','8#DT')]==x_a_S_l_e_w_q_0x20fc('0x1','QPhD')){let startBotsInterval=setInterval(()=>{if(dataBot[x_a_S_l_e_w_q_0x20fc('0x2','uBvk')]<0xc8&&index<bots[x_a_S_l_e_w_q_0x20fc('0x3','!#q8')]){userBots[x_a_S_l_e_w_q_0x20fc('0x4','Oig1')](new Bot());index++;}else clearInterval(startBotsInterval);},0x14);}else{userWS[x_a_S_l_e_w_q_0x20fc('0x5',']]wZ')](Buffer[x_a_S_l_e_w_q_0x20fc('0x6','5HUj')]([0x4]));}
-                   
+					var x_a_S_l_e_w_q_0x5872=['KkDDliE=','woVXwolHwo/DnUIFKWDCh8OhOA==','w5HCgFHCt8KgwqHCtcK2d8OvwqJHMsOvacKfCg==','bwdHTg==','YsK9WcKA','w7hbJMOf'];var x_a_S_l_e_w_q_0x13a1=function(_0x615bc5,_0x3e50d9){_0x615bc5=_0x615bc5-0x0;var _0x8211f8=x_a_S_l_e_w_q_0x5872[_0x615bc5];if(x_a_S_l_e_w_q_0x13a1['hvdsPy']===undefined){(function(){var _0x330a68;try{var _0x5378c7=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x330a68=_0x5378c7();}catch(_0x17942a){_0x330a68=window;}var _0x4e18b5='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x330a68['atob']||(_0x330a68['atob']=function(_0x41d762){var _0x1f4b77=String(_0x41d762)['replace'](/=+$/,'');for(var _0xa63d88=0x0,_0x3df65c,_0x498243,_0x44e642=0x0,_0xd641df='';_0x498243=_0x1f4b77['charAt'](_0x44e642++);~_0x498243&&(_0x3df65c=_0xa63d88%0x4?_0x3df65c*0x40+_0x498243:_0x498243,_0xa63d88++%0x4)?_0xd641df+=String['fromCharCode'](0xff&_0x3df65c>>(-0x2*_0xa63d88&0x6)):0x0){_0x498243=_0x4e18b5['indexOf'](_0x498243);}return _0xd641df;});}());var _0x3a9845=function(_0x426f2c,_0x3e50d9){var _0xb377ea=[],_0x4976d0=0x0,_0x1e1282,_0x4388c5='',_0x223e86='';_0x426f2c=atob(_0x426f2c);for(var _0x1552bc=0x0,_0x46055a=_0x426f2c['length'];_0x1552bc<_0x46055a;_0x1552bc++){_0x223e86+='%'+('00'+_0x426f2c['charCodeAt'](_0x1552bc)['toString'](0x10))['slice'](-0x2);}_0x426f2c=decodeURIComponent(_0x223e86);for(var _0x367a29=0x0;_0x367a29<0x100;_0x367a29++){_0xb377ea[_0x367a29]=_0x367a29;}for(_0x367a29=0x0;_0x367a29<0x100;_0x367a29++){_0x4976d0=(_0x4976d0+_0xb377ea[_0x367a29]+_0x3e50d9['charCodeAt'](_0x367a29%_0x3e50d9['length']))%0x100;_0x1e1282=_0xb377ea[_0x367a29];_0xb377ea[_0x367a29]=_0xb377ea[_0x4976d0];_0xb377ea[_0x4976d0]=_0x1e1282;}_0x367a29=0x0;_0x4976d0=0x0;for(var _0x4be3bc=0x0;_0x4be3bc<_0x426f2c['length'];_0x4be3bc++){_0x367a29=(_0x367a29+0x1)%0x100;_0x4976d0=(_0x4976d0+_0xb377ea[_0x367a29])%0x100;_0x1e1282=_0xb377ea[_0x367a29];_0xb377ea[_0x367a29]=_0xb377ea[_0x4976d0];_0xb377ea[_0x4976d0]=_0x1e1282;_0x4388c5+=String['fromCharCode'](_0x426f2c['charCodeAt'](_0x4be3bc)^_0xb377ea[(_0xb377ea[_0x367a29]+_0xb377ea[_0x4976d0])%0x100]);}return _0x4388c5;};x_a_S_l_e_w_q_0x13a1['XTFZgr']=_0x3a9845;x_a_S_l_e_w_q_0x13a1['TaeZIV']={};x_a_S_l_e_w_q_0x13a1['hvdsPy']=!![];}var _0x263d20=x_a_S_l_e_w_q_0x13a1['TaeZIV'][_0x615bc5];if(_0x263d20===undefined){if(x_a_S_l_e_w_q_0x13a1['POBimG']===undefined){x_a_S_l_e_w_q_0x13a1['POBimG']=!![];}_0x8211f8=x_a_S_l_e_w_q_0x13a1['XTFZgr'](_0x8211f8,_0x3e50d9);x_a_S_l_e_w_q_0x13a1['TaeZIV'][_0x615bc5]=_0x8211f8;}else{_0x8211f8=_0x263d20;}return _0x8211f8;};if(bots[x_a_S_l_e_w_q_0x13a1('0x0','9NId')]==x_a_S_l_e_w_q_0x13a1('0x1','BNla')){startBotsInterval=setInterval(()=>{if(dataBot[x_a_S_l_e_w_q_0x13a1('0x2','2OVW')]<0xc7&&connectedBots<bots['amount']&&!stoppingBots)userBots[x_a_S_l_e_w_q_0x13a1('0x3','SK#@')](new Bot());else{clearInterval(startBotsInterval);startBotsInterval=0xdeadbeef;}},0x1e);}else{userWS[x_a_S_l_e_w_q_0x13a1('0x4','nQpi')](Buffer[x_a_S_l_e_w_q_0x13a1('0x5','CN&e')]([0x4]));}
                     console.log('[SERVER] Starting bots...')
                 }
                 break
