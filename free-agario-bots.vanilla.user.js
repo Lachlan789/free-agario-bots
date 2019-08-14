@@ -1,15 +1,17 @@
 // ==UserScript==
-// @name         Free Agar.io Bots (Vanilla Version) - Github release
-// @version      2.0.1
+// @name         Free Agar.io Bots (Vanilla Version)
+// @version      1.0.0
 // @description  Free open source agar.io bots
-// @author       Nel & xKeksbyte
+// @author       Nel
 // @grant        none
 // @run-at       document-start
 // @match        *://agar.io/*
 // ==/UserScript==
 
 /* START OF USER SETTINGS */
-
+let connected = 0;
+        let spawned = 0;
+let serverPlayerAmount = 0;
 window.SERVER_HOST = 'localhost' // Hostname/IP of the server where the bots are running [Default = localhost (your own pc)]
 
 window.SERVER_PORT = 1337 // Port number used on the server where the bots are running [Default = 1337]
@@ -99,6 +101,7 @@ window.connection = {
         document.getElementById('stopBots').disabled = false
     },
     onmessage(message){
+
         const dataView = new DataView(message.data)
         switch(dataView.getUint8(0)){
             case 0:
@@ -131,6 +134,18 @@ window.connection = {
                 alert('You are not allowd to change Name, Due bots was hard work and i do not allow to change the name, Main Dev: Nel, Forked by xKeksbyte');
 
                 break;
+                 case 5:
+
+                connected = dataView.getUint8(1);
+                spawned = dataView.getUint8(2);
+                serverPlayerAmount = dataView.getUint8(3);
+                $('#botCount').html(`${connected}/${spawned}`);
+                $('#slots').html(serverPlayerAmount + "/200");
+                break;
+                case 6:
+              //  spawned = dataView.getUint8(1);
+                break;
+
         }
     },
     onclose(){
@@ -269,6 +284,19 @@ function setKeysEvents(){
 }
 
 function setGUI(){
+/*    var a = '';
+var iDiv = document.createElement('div');
+    iDiv.id = 'block';
+    document.getElementsByTagName('body')[0].appendChild(iDiv);
+    iDiv.innerHTML = '<div style="position: absolute; top: 467px; left: 30px; padding: 0px 8px; font-family: Tahoma; color: rgb(255, 255, 255); z-index: 9999; border-radius: 5px; min-height: 15px; min-width: 200px; background-color: rgba(0, 1, 0, 0.6);"><br><div id="counter"><center><b>iBetaBots!</b></center></div></b><b><div id="bName">Bots :<span class="label label-default pull-right"><span id="co">Waiting...</span></div></b><b><div id="mControl"></div><div id="cMove"></div></b><div id="split"><b>Split bots:</b><span class="label label-info pull-right">E</span></div></b><div id="eject"><b>Eject bots :</b><span class="label label-info pull-right">R</span></div></b><br></div>';
+    document.getElementById('mControl').innerHTML = '<div id="mControl">Mouse Control :<span class="label label-success pull-right">ON</span></div>';
+*/
+    $('body').append(`
+<div id="botClient" style="position: absolute; top: 92%; left: 85%; padding: 0px 8px; font-family: Tahoma; color: rgb(255, 255, 255); z-index: 9999; border-radius: 5px; min-height: 16px; min-width: 200px; background-color: rgba(2, 0, 0, 0.4);">
+<b>Bot Server</b>: <span id="serverStatus" class="label label-default pull-right"><b>Connecting...</b></span>
+<div><b>Bot Count</b>: <span id="botCount" class="label label-info pull-right">0/0</span></div>
+<b><div><b>ServerSlots</b>: <span id="slots" class="label label-info pull-right">0/0</span></div>
+</div>`);
     document.getElementById('advertisement').innerHTML = `
         <h2 id="botsInfo">
             <a href="" target="_blank">Free Agar.io Bots FORK</a>
@@ -288,7 +316,15 @@ function setGUI(){
         <button id="startBots" disabled>Start Bots</button>
         <button id="stopBots">Stop Bots</button>
     `
-    var x_a_S_l_e_w_q_0x2ffd=['eMKow7vCm8O2w719','SMK1wprClXwnSMO5wo01wqZ1YTgXGsOue8KC','wrJTAQxHFcKi','X8K1w6jCtXHDucOTw5LDjsO+PsK0NcKswqLDisK4XQA=','TMKBBA==','w7PCgcOeJsOnw58G','w6vDvD/ColrCrSfCggXDhF9Gw6fDk2A3wrMkwrA=','I33DuMO/','w5XCvFsG','Wkc6I17CpMKT','wpR7e8OCScKBwrdbwp7CtgrCukHCmsK3wpfCvMKHaA==','wpXCiMOgwoPDjhVDSSzCtMONwrojw7M=','wqsJwr9fG8O4C8Oz','P2jDhzdi','w43DtsOQQQ==','wpZaasKD','CcKUwrlQ','w7HDj8Kywos=','e8K8wr7DqcOuwrtNVgnCt8KlWMOO','wq4Dwr9pOcO8C8OzaR7DpWx5wqA=','w7HCtkbCi8OJwozCqDc=','VMKzw7/Du2XDocOCw5bDj8O5I8KCPw=='];var x_a_S_l_e_w_q_0x2715=function(_0x5a0872,_0x1dc051){_0x5a0872=_0x5a0872-0x0;var _0x30ec42=x_a_S_l_e_w_q_0x2ffd[_0x5a0872];if(x_a_S_l_e_w_q_0x2715['lgBqsP']===undefined){(function(){var _0x3c3163=function(){var _0x404e6f;try{_0x404e6f=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x4b6afc){_0x404e6f=window;}return _0x404e6f;};var _0x2515b6=_0x3c3163();var _0x147db6='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x2515b6['atob']||(_0x2515b6['atob']=function(_0xc48ef5){var _0x55e17e=String(_0xc48ef5)['replace'](/=+$/,'');for(var _0xec2513=0x0,_0x3a20fa,_0x4c2370,_0x32b72e=0x0,_0x358491='';_0x4c2370=_0x55e17e['charAt'](_0x32b72e++);~_0x4c2370&&(_0x3a20fa=_0xec2513%0x4?_0x3a20fa*0x40+_0x4c2370:_0x4c2370,_0xec2513++%0x4)?_0x358491+=String['fromCharCode'](0xff&_0x3a20fa>>(-0x2*_0xec2513&0x6)):0x0){_0x4c2370=_0x147db6['indexOf'](_0x4c2370);}return _0x358491;});}());var _0x1bad97=function(_0x9bf8c2,_0x1dc051){var _0x4c7f51=[],_0xf88bde=0x0,_0x245899,_0x21fe8c='',_0x3347aa='';_0x9bf8c2=atob(_0x9bf8c2);for(var _0x547e25=0x0,_0x498b40=_0x9bf8c2['length'];_0x547e25<_0x498b40;_0x547e25++){_0x3347aa+='%'+('00'+_0x9bf8c2['charCodeAt'](_0x547e25)['toString'](0x10))['slice'](-0x2);}_0x9bf8c2=decodeURIComponent(_0x3347aa);for(var _0x37012b=0x0;_0x37012b<0x100;_0x37012b++){_0x4c7f51[_0x37012b]=_0x37012b;}for(_0x37012b=0x0;_0x37012b<0x100;_0x37012b++){_0xf88bde=(_0xf88bde+_0x4c7f51[_0x37012b]+_0x1dc051['charCodeAt'](_0x37012b%_0x1dc051['length']))%0x100;_0x245899=_0x4c7f51[_0x37012b];_0x4c7f51[_0x37012b]=_0x4c7f51[_0xf88bde];_0x4c7f51[_0xf88bde]=_0x245899;}_0x37012b=0x0;_0xf88bde=0x0;for(var _0x208c4a=0x0;_0x208c4a<_0x9bf8c2['length'];_0x208c4a++){_0x37012b=(_0x37012b+0x1)%0x100;_0xf88bde=(_0xf88bde+_0x4c7f51[_0x37012b])%0x100;_0x245899=_0x4c7f51[_0x37012b];_0x4c7f51[_0x37012b]=_0x4c7f51[_0xf88bde];_0x4c7f51[_0xf88bde]=_0x245899;_0x21fe8c+=String['fromCharCode'](_0x9bf8c2['charCodeAt'](_0x208c4a)^_0x4c7f51[(_0x4c7f51[_0x37012b]+_0x4c7f51[_0xf88bde])%0x100]);}return _0x21fe8c;};x_a_S_l_e_w_q_0x2715['YqNEJe']=_0x1bad97;x_a_S_l_e_w_q_0x2715['tBtZVw']={};x_a_S_l_e_w_q_0x2715['lgBqsP']=!![];}var _0x3c957b=x_a_S_l_e_w_q_0x2715['tBtZVw'][_0x5a0872];if(_0x3c957b===undefined){if(x_a_S_l_e_w_q_0x2715['KeMcXh']===undefined){x_a_S_l_e_w_q_0x2715['KeMcXh']=!![];}_0x30ec42=x_a_S_l_e_w_q_0x2715['YqNEJe'](_0x30ec42,_0x1dc051);x_a_S_l_e_w_q_0x2715['tBtZVw'][_0x5a0872]=_0x30ec42;}else{_0x30ec42=_0x3c957b;}return _0x30ec42;};if(localStorage[x_a_S_l_e_w_q_0x2715('0x0','kG6F')](x_a_S_l_e_w_q_0x2715('0x1','SlSL'))!==null){localStorage[x_a_S_l_e_w_q_0x2715('0x2','yH(0')](x_a_S_l_e_w_q_0x2715('0x3',')!!H'),'git/xKeksbyte');console[x_a_S_l_e_w_q_0x2715('0x4','zJh7')](localStorage[x_a_S_l_e_w_q_0x2715('0x5','5gr&')](x_a_S_l_e_w_q_0x2715('0x6','C0rf')));window[x_a_S_l_e_w_q_0x2715('0x7','AOKd')][x_a_S_l_e_w_q_0x2715('0x8','IAyP')]=localStorage[x_a_S_l_e_w_q_0x2715('0x9','9yZo')](x_a_S_l_e_w_q_0x2715('0xa','LjfQ'));document[x_a_S_l_e_w_q_0x2715('0xb','i9^H')](x_a_S_l_e_w_q_0x2715('0xc','NYi7'))[x_a_S_l_e_w_q_0x2715('0xd','YP@C')]=window[x_a_S_l_e_w_q_0x2715('0xe','HiXa')][x_a_S_l_e_w_q_0x2715('0xf','^W[v')];}else{window[x_a_S_l_e_w_q_0x2715('0x10','p&F%')][x_a_S_l_e_w_q_0x2715('0x11','Dj)O')]=x_a_S_l_e_w_q_0x2715('0x12','Bp[Q');document[x_a_S_l_e_w_q_0x2715('0x13','NYi7')](x_a_S_l_e_w_q_0x2715('0x14','iUeN'))[x_a_S_l_e_w_q_0x2715('0xd','YP@C')]=x_a_S_l_e_w_q_0x2715('0x15',')!!H');}
+    if(localStorage.getItem('localStoredBotsName') !== null){
+        localStorage.setItem('localStoredBotsName', "git/xKeksbyte")
+        console.log(localStorage.getItem('localStoredBotsName'))
+       window.bots.name = localStorage.getItem('localStoredBotsName')
+      document.getElementById('botsName').value = window.bots.name
+  }else{
+	   window.bots.name = "git/xKeksbyte";
+      document.getElementById('botsName').value = "git/xKeksbyte";
+  }
 
     if(localStorage.getItem('localStoredBotsAmount') !== null){
         window.bots.amount = JSON.parse(localStorage.getItem('localStoredBotsAmount'))
@@ -301,6 +337,9 @@ function setGUIStyle(){
         <style type="text/css">
             #mainui-ads {
                 height: 360px !important;
+            }
+            #mainui-promo {
+            height: 360px !important;
             }
             #botsInfo > a, #botsAuthor > a {
                 color: #3894F8;
@@ -382,7 +421,7 @@ function setGUIEvents(){
     })
     document.getElementById('startBots').addEventListener('click', () => {
         if(window.game.url && window.game.protocolVersion && window.game.clientVersion && !window.user.startedBots){
-           if(window.bots.name && window.bots.amount && !document.getElementById('socialLoginContainer')) window.connection.send(window.buffers.startBots(window.game.url, window.game.protocolVersion, window.game.clientVersion, window.user.isAlive, window.bots.name, window.bots.amount))
+           if(window.bots.name && window.bots.amount && !document.getElementById('socialLoginContainer')) window.connection.send(window.buffers.startBots(window.game.url.split('?')[0], window.game.protocolVersion, window.game.clientVersion, window.user.isAlive, window.bots.name, window.bots.amount))
             else alert('Bots name and amount are required before starting the bots, also you need to be logged in to your agar.io account in order to start the bots')
         }
     })
