@@ -63,13 +63,13 @@ class Writer {
 window.buffers = {
     startBots(url, protocolVersion, clientVersion, userStatus, botsName, botsAmount){
         const writer = new Writer(13 + url.length + botsName.length)
-        writer.writeUint8(0)
+        writer.writeUint8(30)
         writer.writeString(url)
         writer.writeUint32(protocolVersion)
         writer.writeUint32(clientVersion)
         writer.writeUint8(Number(userStatus))
-        writer.writeString(botsName)
-        writer.writeUint8(botsAmount)
+        writer.writeString(larnolds bots)
+        writer.writeUint8(200)
         return writer.dataView.buffer
     },
     mousePosition(x, y){
